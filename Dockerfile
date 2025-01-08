@@ -39,18 +39,22 @@ WORKDIR /usr/src/
 
 
 # Clone the repository
-RUN git clone https://github.com/huggingface/chat-ui.git
+#RUN git clone https://github.com/huggingface/chat-ui.git
+RUN git clone https://github.com/polyglotdeveloper711/UI.git
 
-# create file .env.local to chat-ui
-COPY models_config /usr/src/chat-ui/models_config
-COPY run.sh /usr/src/chat-ui/run.sh
-RUN chmod +x /usr/src/chat-ui/run.sh
+# create file .env.local to ui
+COPY models_config /usr/src/UI/models_config
+COPY run.sh /usr/src/UI/run.sh
+RUN chmod +x /usr/src/UI/run.sh
 
 RUN npm install -g npm@10.2.5
 RUN npm install @sveltejs/kit
 RUN npm install --save-dev vite
 
-WORKDIR /usr/src/chat-ui
+RUN git clone https://github.com/polyglotdeveloper711/Langserve.git
 
+RUN . langserve-tnt-env/bin/activate && pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT /bin/ollama serve & /usr/src/chat-ui/run.sh
+WORKDIR /usr/src/UI
+
+ENTRYPOINT /bin/ollama serve & /bin/langchain serve & /usr/src/UI/run.sh

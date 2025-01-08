@@ -1,9 +1,9 @@
 echo "download model"
-tmux new-session -d -s ollama "ollama run mistral"
+tmux new-session -d -s ollama "ollama run llama2:13b"
 echo "sleep for 30 minutes"
 sleep 600
 
-ENV_LOCAL_PATH=/usr/src/chat-ui/.env.local
+ENV_LOCAL_PATH=/usr/src/UI/.env.local
 INCLUDE_DB=false
 if test -z "${DOTENV_LOCAL}" ; then
     if ! test -f "${ENV_LOCAL_PATH}" ; then
